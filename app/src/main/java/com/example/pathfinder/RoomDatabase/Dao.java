@@ -2,10 +2,8 @@ package com.example.pathfinder.RoomDatabase;
 
 import androidx.room.Insert;
 import androidx.room.Query;
-
 import com.example.pathfinder.Main.Step;
 import com.example.pathfinder.Main.User;
-
 import java.util.List;
 
 @androidx.room.Dao
