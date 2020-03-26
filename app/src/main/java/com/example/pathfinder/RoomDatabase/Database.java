@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.pathfinder.Main.Step;
 import com.example.pathfinder.Main.User;
 
-@androidx.room.Database(entities  = {User.class, Step.class}, version = 2, exportSchema = false)
+@androidx.room.Database(entities  = {User.class, Step.class}, version = 3, exportSchema = false)
 public abstract class Database extends RoomDatabase {
     private static Database instance;
 

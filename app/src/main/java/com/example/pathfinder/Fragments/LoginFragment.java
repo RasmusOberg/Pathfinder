@@ -47,13 +47,18 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                username = inputUsername.getText().toString();
-                password = inputPassword.getText().toString();
-                if(validateLogin(username, password)){
-                    Toast.makeText(getContext(), "Login succesful", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getActivity(), DisplayInformationActivity.class));
-                }else{
-                    Toast.makeText(getContext(), "Login failed", Toast.LENGTH_SHORT).show();
+                try {
+                    username = inputUsername.getText().toString();
+                    password = inputPassword.getText().toString();
+
+                    if (validateLogin(username, password)) {
+                        Toast.makeText(getContext(), "Login succesful", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getActivity(), DisplayInformationActivity.class));
+                    } else {
+                        Toast.makeText(getContext(), "Login failed", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (NullPointerException e){
+                    Toast.makeText(getActivity(), "Enter something!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -78,7 +83,7 @@ public class LoginFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 //        mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         mViewModel = ViewModelProviders.of(this, new MyViewModelFactory(getActivity().getApplication())).get(LoginViewModel.class);
-        Toast.makeText(getContext(), "Viewmodel created!", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Viewmodel created!", Toast.LENGTH_SHORT).show();
         // TODO: Use the ViewModel
     }
 

@@ -12,9 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.pathfinder.Fragments.CompassFragment;
+import com.example.pathfinder.Fragments.ShowStepsFragment;
+import com.example.pathfinder.Fragments.TestFragment;
 import com.example.pathfinder.R;
+import com.example.pathfinder.ui.main.MainViewModel;
 import com.google.android.material.navigation.NavigationView;
 
 public class DisplayInformationActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -22,6 +26,8 @@ public class DisplayInformationActivity extends AppCompatActivity implements Nav
     private MyServiceConnection connection;
     private Intent stepsIntent;
     boolean bound = false;
+    public StepService service;
+    private MainViewModel viewModel;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -35,7 +41,7 @@ public class DisplayInformationActivity extends AppCompatActivity implements Nav
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
+        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         connection = new MyServiceConnection(this);
         stepsIntent = new Intent(this, StepService.class);
         bindService(stepsIntent, connection, Context.BIND_AUTO_CREATE);
@@ -51,15 +57,19 @@ public class DisplayInformationActivity extends AppCompatActivity implements Nav
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CompassFragment()).commit();
                 break;
             case R.id.nav_show_steps:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, expenseResultFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShowStepsFragment()).commit();
                 break;
             case R.id.nav_overview:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TestFragment()).commit();
                 break;
         }
         menuItem.setChecked(true);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void createStepsEntry(){
+        viewModel.insertStep(new Step(0, DateFormat.getDateFormat(System.currentTimeMillis()), viewModel.getCurrentUser()));
     }
 
     protected void onDestroy(){

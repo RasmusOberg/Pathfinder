@@ -15,7 +15,14 @@ public class Step {
     @ColumnInfo(name = "stepCount")
     private int stepCount;
 
-    public Step(){}
+    @ColumnInfo(name = "user")
+    private String user;
+
+    public Step(int stepCount, String date, String user){
+        this.stepCount = stepCount;
+        this.date = date;
+        this.user = user;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -23,5 +30,29 @@ public class Step {
 
     public int getId() {
         return id;
+    }
+
+    public int getStepCount() {
+        return stepCount;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setStepCount(int stepCount) {
+        this.stepCount = stepCount;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }
